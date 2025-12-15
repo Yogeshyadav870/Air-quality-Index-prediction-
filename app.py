@@ -1,6 +1,34 @@
 import streamlit as st
 import pandas as pd
 import joblib
+def add_bg():
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-image: url("https://raw.githubusercontent.com/Yogeshyadav870/Air-quality-Index-prediction-/main/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Glass effect card */
+        .block-container {
+            background-color: rgba(0, 0, 0, 0.55);
+            padding: 2rem;
+            border-radius: 12px;
+        }
+
+        /* Text color fix */
+        h1, h2, h3, p, label, span {
+            color: #ffffff !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+add_bg()
 
 # -----------------------------
 # Load saved objects
