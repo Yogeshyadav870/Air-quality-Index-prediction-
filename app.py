@@ -88,6 +88,29 @@ if st.button("Predict AQI"):
         """,
         unsafe_allow_html=True
     )
+        # -------- Explainability: Top Pollutant --------
+    pollutant_display_names = {
+        "PM2.5": "PM2.5",
+        "PM10": "PM10",
+        "NO2": "NO₂",
+        "OZONE": "Ozone (O₃)",
+        "SO2": "Sulphur Dioxide (SO₂)",
+        "CO": "Carbon Monoxide (CO)",
+        "NH3": "Ammonia (NH₃)"
+    }
+
+    # Get pollutant values used for prediction
+    pollutant_values = {
+        k: v for k, v in default_values.items() if k in pollutant_display_names
+    }
+
+    top_pollutant = max(pollutant_values, key=pollutant_values.get)
+
+    st.warning(
+        f"🔍 **Primary contributing pollutant:** "
+        f"{pollutant_display_names[top_pollutant]}"
+    )
+
 
     # -------- Health Advisory --------
     advisory_map = {
