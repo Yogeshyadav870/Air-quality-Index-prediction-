@@ -31,9 +31,35 @@ st.write(
 # -----------------------------
 # User Inputs (ONLY 3)
 # -----------------------------
-pm25 = st.number_input("PM2.5 (µg/m³)", min_value=0.0, value=50.0)
-pm10 = st.number_input("PM10 (µg/m³)", min_value=0.0, value=80.0)
-no2  = st.number_input("NO2 (µg/m³)",  min_value=0.0, value=40.0)
+# -----------------------------
+# City Preset (Optional)
+# -----------------------------
+city_presets = {
+    "Manual Input": {"PM2.5": 50, "PM10": 80, "NO2": 40},
+    "Delhi": {"PM2.5": 160, "PM10": 220, "NO2": 90},
+    "Mumbai": {"PM2.5": 80, "PM10": 120, "NO2": 45},
+    "Bengaluru": {"PM2.5": 55, "PM10": 75, "NO2": 30},
+    "Kolkata": {"PM2.5": 95, "PM10": 140, "NO2": 50},
+    "Chennai": {"PM2.5": 65, "PM10": 90, "NO2": 35}
+}
+
+selected_city = st.selectbox("Select City (optional)", city_presets.keys())
+
+preset = city_presets[selected_city]
+
+# -----------------------------
+# User Inputs (ONLY 3)
+# -----------------------------
+pm25 = st.number_input(
+    "PM2.5 (µg/m³)", min_value=0.0, value=float(preset["PM2.5"])
+)
+pm10 = st.number_input(
+    "PM10 (µg/m³)", min_value=0.0, value=float(preset["PM10"])
+)
+no2 = st.number_input(
+    "NO2 (µg/m³)", min_value=0.0, value=float(preset["NO2"])
+)
+
 
 # -----------------------------
 # Auto-filled pollutant values
