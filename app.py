@@ -46,4 +46,32 @@ if st.button("Predict AQI Category"):
     pred = model.predict(input_df)
     category = label_encoder.inverse_transform(pred)
 
-    st.success(f"Predicted AQI Category: **{category[0]}**")
+    aqi = category[0]
+
+color_map = {
+    "Good": "#2ecc71",
+    "Satisfactory": "#7bed9f",
+    "Moderate": "#f1c40f",
+    "Poor": "#e67e22",
+    "Very Poor": "#e74c3c",
+    "Severe": "#8e44ad"
+}
+
+color = color_map.get(aqi, "#ffffff")
+
+st.markdown(
+    f"""
+    <div style="
+        background-color:{color};
+        padding:20px;
+        border-radius:10px;
+        text-align:center;
+        color:black;
+        font-size:24px;
+        font-weight:bold;">
+        AQI Category: {aqi}
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
