@@ -3,9 +3,15 @@ import pandas as pd
 import joblib
 
 # -----------------------------
-# Page config (TOP pe hona chahiye)
+# Page config (sabse upar)
 # -----------------------------
 st.set_page_config(page_title="AQI Prediction App", layout="centered")
+
+# -----------------------------
+# Session state init
+# -----------------------------
+if "start_app" not in st.session_state:
+    st.session_state.start_app = False
 
 # -----------------------------
 # Background + Glass UI
@@ -38,7 +44,7 @@ def add_bg():
 add_bg()
 
 # -----------------------------
-# HERO SECTION (Front Page)
+# HERO SECTION
 # -----------------------------
 st.markdown(
     """
@@ -55,17 +61,18 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-start_app = st.button("🚀 Check Air Quality")
+if st.button("🚀 Check Air Quality"):
+    st.session_state.start_app = True
 
 # =====================================================
-# MAIN APP (loads only after button click)
+# MAIN APP (only after CTA click)
 # =====================================================
-if start_app:
+if st.session_state.start_app:
 
     st.markdown("---")
 
     # -----------------------------
-    # Load saved models
+    # Load models
     # -----------------------------
     category_model = joblib.load("aqi_category_model.pkl")
     label_encoder = joblib.load("aqi_category_labelencoder.pkl")
@@ -85,9 +92,9 @@ if start_app:
     # -----------------------------
     city_presets = {
         "Manual Input": {"PM2.5": 50, "PM10": 80, "NO2": 40},
-        "Delhi": {"PM2.5": 280, "PM10": 220, "NO2": 90},
+        "Delhi": {"PM2.5": 160, "PM10": 220, "NO2": 90},
         "Mumbai": {"PM2.5": 80, "PM10": 120, "NO2": 45},
-        "Bengaluru": {"PM2.5": 55, "PM10": 25, "NO2": 30},
+        "Bengaluru": {"PM2.5": 55, "PM10": 75, "NO2": 30},
         "Kolkata": {"PM2.5": 95, "PM10": 140, "NO2": 50},
         "Chennai": {"PM2.5": 65, "PM10": 90, "NO2": 35}
     }
