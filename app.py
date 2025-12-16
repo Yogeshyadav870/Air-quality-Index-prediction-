@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # -----------------------------
-# Page config (sabse upar)
+# Page config (must be first)
 # -----------------------------
 st.set_page_config(page_title="AQI Prediction App", layout="centered")
 
@@ -65,7 +65,7 @@ if st.button("🚀 Check Air Quality"):
     st.session_state.start_app = True
 
 # =====================================================
-# MAIN APP (only after CTA click)
+# MAIN APP (after CTA click)
 # =====================================================
 if st.session_state.start_app:
 
@@ -88,7 +88,7 @@ if st.session_state.start_app:
     st.subheader("Enter Pollution Details")
 
     # -----------------------------
-    # City Presets
+    # City presets
     # -----------------------------
     city_presets = {
         "Manual Input": {"PM2.5": 50, "PM10": 80, "NO2": 40},
@@ -103,7 +103,7 @@ if st.session_state.start_app:
     preset = city_presets[selected_city]
 
     # -----------------------------
-    # User Inputs (ONLY 3)
+    # Inputs (ONLY 3)
     # -----------------------------
     pm25 = st.number_input("PM2.5 (µg/m³)", min_value=0.0, value=float(preset["PM2.5"]))
     pm10 = st.number_input("PM10 (µg/m³)", min_value=0.0, value=float(preset["PM10"]))
@@ -129,6 +129,9 @@ if st.session_state.start_app:
     # Prediction
     # -----------------------------
     if st.button("Predict AQI"):
+
+        # 🔽 Anchor for auto-scroll
+        st.markdown('<div id="result"></div>', unsafe_allow_html=True)
 
         pred = category_model.predict(input_df)
         category = label_encoder.inverse_transform(pred)[0]
@@ -181,7 +184,7 @@ if st.session_state.start_app:
         )
 
         # -----------------------------
-        # Health Advisory
+        # Health advisory
         # -----------------------------
         advisory_map = {
             "Good": "Air quality is good. Ideal for outdoor activities.",
@@ -203,3 +206,13 @@ if st.session_state.start_app:
                 reg_input = input_df[regression_features]
                 numeric_aqi = regression_model.predict(reg_input)[0]
                 st.metric("Predicted AQI Value", round(numeric_aqi, 2))
+
+        # 🔽 AUTO SCROLL (FINAL LINE)
+        st.markdown(
+            """
+            <script>
+                document.getElementById("result").scrollIntoView({behavior: "smooth"});
+            </script>
+            """,
+            unsafe_allow_html=True
+        )
