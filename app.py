@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # -----------------------------
-# Page config (must be first)
+# Page config (must be firs
 # -----------------------------
 st.set_page_config(page_title="AQI Prediction App", layout="centered")
 
